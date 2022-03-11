@@ -36,7 +36,12 @@ export default function StaffListComponent() {
       <div>
         <br></br>
         <h4 className="a" style={{ textAlign: "left" }}>
-          Bấm vào tên nhân viên để hiển thị thông tin
+          Bấm vào tên nhân viên để hiển thị thông tin. Số cột hiển thị <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          </select>
         </h4>
         <div hidden={onShow} className="info" >
           <div className="half col-5 col-md-5 col-lg-5" style={{textAlign: "left"}}>
@@ -52,7 +57,7 @@ export default function StaffListComponent() {
           <p>Số ngày đã làm thêm: {STAFFS[sIndex].overTime}</p>
           </div>
           <div className="half col-5 col-md-5 col-lg-5">        
-          {<img src={require( "../shared/logo192.png")} alt=" not found"/>}
+          {<img src={require( "../shared/profile_64.png")} alt=" not found"/>}
           </div>
         </div>
       </div>

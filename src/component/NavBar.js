@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar, Container, Nav} from 'react-bootstrap'
+import {Navbar, Container, Nav, img} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -12,7 +12,7 @@ export default function NavBar() {
       <Navbar.Brand href="#home">
         <img
           alt=""
-          src="../shared/logo512.png"
+          src={require( "../shared/logo192.png")}
           width="30"
           height="30"
           className="d-inline-block align-top"

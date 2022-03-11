@@ -25,6 +25,7 @@
     float: left;
     margin: 5px;
     height: inherit;
+    padding: 10px;
 }
 
 .info {
@@ -35,3 +36,6 @@
     text-indent: 20px;
 }
 
+body {
+    background-color: radian(rgb(83, 51, 197),rgb(214, 62, 189));
+}
