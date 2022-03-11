@@ -8,13 +8,30 @@ export default function StaffListComponent() {
   const idList = STAFFS.map((s) => s.id);
   const [sIndex, setSIndex] = useState(0);
   const [onShow, setOnShow] = useState(true);
-  console.log(sIndex, onShow, idList);
+  const  [option, setOption] = useState(null);
+  let grid = 'list col-12 col-md-5 col-lg-3';
+  
 
   const OnShowInfo = (staff) => {
     setSIndex(idList.indexOf(staff.id));
     setOnShow(false);
-    console.log(sIndex);
+   
   };
+ 
+  const changeCol = () => {
+    
+    setOption(document.getElementById('select').value);   
+    
+    if (option  == 1) {grid = 'list col-12 col-md-12 col-lg-12'   }
+    else if (option  == 2) { grid ='list col-6 col-md-6 col-lg-6' }
+    else if (option  == 3) {grid ='list col-4 col-md-4 col-lg-4' }
+    else if (option  == 4) {grid ='list col-3 col-md-3 col-lg-3' }
+    else if (option  == 5) {grid ='list col-2 col-md-2 col-lg-2' }
+    else if (option  == 6) {grid ='list col-1 col-md-1 col-lg-1' }
+    console.log(option, grid)
+    
+    
+  }
 
   return (
     <div>
@@ -24,7 +41,7 @@ export default function StaffListComponent() {
             return (
               <div
                 onClick={() => OnShowInfo(staff)}
-                className="list col-12 col-md-5 col-lg-3"
+                className={grid}
                 key={staff.id}
               >
                 {staff.name}
@@ -36,11 +53,13 @@ export default function StaffListComponent() {
       <div>
         <br></br>
         <h4 className="a" style={{ textAlign: "left" }}>
-          Bấm vào tên nhân viên để hiển thị thông tin. Số cột hiển thị <select>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
+          Bấm vào tên nhân viên để hiển thị thông tin. Số cột hiển thị <select id="select" onChange={changeCol}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
           </select>
         </h4>
         <div hidden={onShow} className="info" >
