@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ReactDOM } from "react";
 import { ROLE, STAFFS } from "../shared/staffs";
 import dateFormat from "dateformat";
 import "./StaffListComponent.css";
@@ -8,8 +8,8 @@ export default function StaffListComponent() {
   const idList = STAFFS.map((s) => s.id);
   const [sIndex, setSIndex] = useState(0);
   const [onShow, setOnShow] = useState(true);
-  const  [option, setOption] = useState(null);
-  let grid = 'list col-12 col-md-5 col-lg-3';
+  
+  const [grid, setGrid] = useState(null);
   
 
   const OnShowInfo = (staff) => {
@@ -18,18 +18,14 @@ export default function StaffListComponent() {
    
   };
  
-  const changeCol = () => {
-    
-    setOption(document.getElementById('select').value);   
-    
-    if (option  == 1) {grid = 'list col-12 col-md-12 col-lg-12'   }
-    else if (option  == 2) { grid ='list col-6 col-md-6 col-lg-6' }
-    else if (option  == 3) {grid ='list col-4 col-md-4 col-lg-4' }
-    else if (option  == 4) {grid ='list col-3 col-md-3 col-lg-3' }
-    else if (option  == 5) {grid ='list col-2 col-md-2 col-lg-2' }
-    else if (option  == 6) {grid ='list col-1 col-md-1 col-lg-1' }
-    console.log(option, grid)
-    
+  const changeCol = (value) => {   
+   
+    if (value  == "1") {return setGrid('list col-12 col-md-12 col-lg-12')   }
+    else if (value  == "2") {return setGrid('list col-5 col-md-5 col-lg-5') }
+    else if (value  == "3") {return setGrid('list col-3 col-md-3 col-lg-3') }
+    else if (value  == "5") {return setGrid('list col-2 col-md-2 col-lg-2') }
+    else if (value  == "5") {return setGrid('list col-1 col-md-1 col-lg-1') }    
+    console.log(value, grid)   
     
   }
 
@@ -41,7 +37,7 @@ export default function StaffListComponent() {
             return (
               <div
                 onClick={() => OnShowInfo(staff)}
-                className={grid}
+                className={grid ? grid : 'list col-12 col-md-5 col-lg-3'}
                 key={staff.id}
               >
                 {staff.name}
@@ -53,13 +49,13 @@ export default function StaffListComponent() {
       <div>
         <br></br>
         <h4 className="a" style={{ textAlign: "left" }}>
-          Bấm vào tên nhân viên để hiển thị thông tin. Số cột hiển thị <select id="select" onChange={changeCol}>
+          Bấm vào tên nhân viên để hiển thị thông tin. Số cột hiển thị <select id="select" onChange={() => changeCol(document.getElementById('select').value)}>
+          <option value="None"></option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
+          <option value="5">5</option>        
+          
           </select>
         </h4>
         <div hidden={onShow} className="info" >
