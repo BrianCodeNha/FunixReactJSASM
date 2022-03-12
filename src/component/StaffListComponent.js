@@ -35,7 +35,7 @@ export default function StaffListComponent() {
  
 
   return (
-    <div>
+    <div className="info">
       <div className="container">
         <div className="row">
           {STAFFS.map((staff) => {
@@ -79,7 +79,7 @@ export default function StaffListComponent() {
           <div className="half col-5 col-md-5 col-lg-5">        
           { <Card>
             
-            <CardImg top src={imgSrc} alt={STAFFS[sIndex].name} />
+            <img class=" rounded" top src={imgSrc} alt={STAFFS[sIndex].name} />
             
             </Card>}
           </div>
