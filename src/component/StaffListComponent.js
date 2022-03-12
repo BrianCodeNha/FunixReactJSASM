@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ROLE, STAFFS } from "../shared/staffs";
-import { Card, CardImg } from 'reactstrap';
+import { Card } from 'reactstrap';
 import dateFormat from "dateformat";
 import "./StaffListComponent.css";
 
