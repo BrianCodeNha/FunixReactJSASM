@@ -12,7 +12,7 @@ export default function NavBar() {
       <Navbar.Brand href="#home">
         <img
           alt=""
-          src={require( "../shared/logo192.png")}
+          src={require( "../shared/logo512.png")}
           width="30"
           height="30"
           className="d-inline-block align-top"
