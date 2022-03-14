@@ -3,14 +3,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Main from './components/MainComponent';
 import React from 'react';
-
+import { BrowserRouter } from 'react-router-dom';
 class App extends React.Component {
   
   render() {
     return (
-      <div className="App">        
+      <BrowserRouter>
+      <div className="App">
         <Main />
       </div>
+    </BrowserRouter>
     );
   }
 }
