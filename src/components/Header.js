@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import {NavLink, Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 //style
-import './Header.module.css'
+import './Header.css'
 export default function Header() {
   return (
     <Navbar bg="light" variant="light" expand="lg">

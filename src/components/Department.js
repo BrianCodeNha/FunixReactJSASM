@@ -1,5 +1,5 @@
 import React from 'react'
-import './Department.module.css'
+import './Department.css'
 export default function Department(props) {
   return (
     <div className='row fluid-container'>

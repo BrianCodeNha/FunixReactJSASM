@@ -1,11 +1,12 @@
 import React from 'react'
 import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdb-react-ui-kit";
 import {Link} from 'react-router-dom'
+
 export default function Salary(props) {
   
   return (
     <div className='content row fluid-container'>
-    <MDBBreadcrumb>
+    <MDBBreadcrumb style = {{padding: '20px'}}>
         <MDBBreadcrumbItem>
           <Link to='/'>Nhân Viên</Link>
         </MDBBreadcrumbItem>
