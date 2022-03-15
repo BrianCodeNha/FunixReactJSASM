@@ -1,6 +1,7 @@
 import React from "react";
 import dateFormat from 'dateformat'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
+import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdb-react-ui-kit";
 import './Employee.css'
 
 export default function Employee(props) {
@@ -13,7 +14,13 @@ export default function Employee(props) {
   
 
   return (
-    <div className="row container">
+    <div className="staff row container">
+    <MDBBreadcrumb>
+        <MDBBreadcrumbItem>
+          <Link to='/'>Nhân Viên</Link>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem active>{staff.name}</MDBBreadcrumbItem>
+      </MDBBreadcrumb>
       <div className="col-12 col-md-4 col-lg-3">
         <img src={staff.image} alt={staff.name} />
       </div>

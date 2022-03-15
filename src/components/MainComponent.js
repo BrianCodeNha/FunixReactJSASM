@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Staff from "./Staff";
 import Department from "./Department";
 import Salary from "./Salary";
-import { STAFFS } from "../shared/staffs";
+import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 
 export default function MainComponent() {
   const [staffId, setStaffId] = useState(null)
@@ -26,10 +26,10 @@ export default function MainComponent() {
             onClick = {(selectedID) => selectedEmployee(selectedID) }/>
           </Route>
           <Route path="/department">
-            <Department />
+            <Department department = {DEPARTMENTS}/>
           </Route>
           <Route path="/salary">
-            <Salary />
+            <Salary staffs = {STAFFS}/>
           </Route>
           <Route path="/:staffId">
             <Employee staffs = {STAFFS} />
