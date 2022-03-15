@@ -32,7 +32,7 @@ export default function MainComponent() {
             <Salary />
           </Route>
           <Route path="/:staffId">
-            <Employee />
+            <Employee staffs = {STAFFS} />
           </Route>
         </Switch>
         <Footer />

@@ -1,7 +1,13 @@
 import React from 'react'
+import {useParams} from 'react-router-dom'
 
-export default function Employee() {
+export default function Employee(props) {
+
+  const param = useParams()
+
   return (
-    <div>Employee</div>
+    <div>
+     {param.staffId}
+    </div>
   )
 }
