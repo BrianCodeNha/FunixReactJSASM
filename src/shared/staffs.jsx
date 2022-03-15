@@ -41,7 +41,7 @@ export const STAFFS =
             department: DEPARTMENTS[0],
             annualLeave: 1,
             overTime: 1,
-            image: '/assets/images/A.jpg',
+            image: '/assets/images/F.jpg',
         },
         {
             id: 1,
@@ -52,7 +52,7 @@ export const STAFFS =
             department: DEPARTMENTS[1],
             annualLeave: 2,
             overTime: 3,
-            image: '/assets/images/B.jpg',
+            image: '/assets/images/F.jpg',
         },
         {
             id: 2,
@@ -63,7 +63,7 @@ export const STAFFS =
             department: DEPARTMENTS[3],
             annualLeave: 4,
             overTime: 5,
-            image: '/assets/images/C.jpg',
+            image: '/assets/images/F.jpg',
         },
         {
             id: 3,
@@ -74,7 +74,7 @@ export const STAFFS =
             department: DEPARTMENTS[2],
             annualLeave: 6,
             overTime: 7,
-            image: '/assets/images/D.jpg',
+            image: '/assets/images/F.jpg',
         },
         {
             id: 4,
@@ -85,7 +85,7 @@ export const STAFFS =
             department: DEPARTMENTS[2],
             annualLeave: 8,
             overTime: 1,
-            image: '/assets/images/E.jpg',
+            image: '/assets/images/F.jpg',
         },
         {
             id: 5,

@@ -20,7 +20,7 @@ export default function Header() {
       <Nav className="me-auto">
       <NavLink to='/'><i className='fa fa-users'></i> Nhân viên</NavLink>
       <NavLink to='/department'><i className='fa fa-building'></i> Phòng ban</NavLink>
-      <NavLink to='/salary'><i class="fa fa-money"></i> Bảng lương</NavLink>
+      <NavLink to='/salary'><i className="fa fa-money"></i> Bảng lương</NavLink>
       </Nav>
       </Container>
   </Navbar>
