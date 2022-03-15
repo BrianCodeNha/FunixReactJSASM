@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 //styles
-import "./staff.css";
+import "./staff.module.css";
 
 export default function Staff(props) {
   return (

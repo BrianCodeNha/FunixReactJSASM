@@ -28,24 +28,21 @@ export default function App() {
               </div>
 
               <div>
-                <a href="#" className="me-4 text-reset">
+                
+                
                   <i className="fab fa-facebook-f"></i>
-                </a>
-                <a href="" className="me-4 text-reset">
+              
                   <i className="fab fa-twitter"></i>
-                </a>
-                <a href="" className="me-4 text-reset">
+                
                   <i className="fab fa-google"></i>
-                </a>
-                <a href="" className="me-4 text-reset">
+               
                   <i className="fab fa-instagram"></i>
-                </a>
-                <a href="" className="me-4 text-reset">
+                
                   <i className="fab fa-linkedin"></i>
-                </a>
-                <a href="" className="me-4 text-reset">
+                
+                
                   <i className="fab fa-github"></i>
-                </a>
+               
               </div>
             </div>
           </div>
