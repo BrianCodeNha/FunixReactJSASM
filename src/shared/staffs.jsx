@@ -41,7 +41,7 @@ export const STAFFS =
             department: DEPARTMENTS[0],
             annualLeave: 1,
             overTime: 1,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 0,
@@ -52,7 +52,7 @@ export const STAFFS =
             department: DEPARTMENTS[1],
             annualLeave: 2,
             overTime: 3,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 2,
@@ -74,7 +74,7 @@ export const STAFFS =
             department: DEPARTMENTS[2],
             annualLeave: 6,
             overTime: 7,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 4,
@@ -96,7 +96,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 6,
@@ -107,7 +107,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 7,
@@ -118,7 +118,7 @@ export const STAFFS =
             department: DEPARTMENTS[2],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 8,
@@ -140,7 +140,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 10,
@@ -151,7 +151,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 11,
@@ -162,7 +162,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 12,
@@ -184,7 +184,7 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 14,
@@ -195,18 +195,18 @@ export const STAFFS =
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
         {
             id: 15,
-            name: "Nguyễn Văn F",
+            name: "Nguyễn Văn E",
             doB: "2003-01-01T08:59:00.000Z",
             salaryScale: 1,
             startDate: "2019-04-30T08:59:00.000Z",
             department: DEPARTMENTS[4],
             annualLeave: 9,
             overTime: 10,
-            image: '/assets/images/F.jpg',
+            image: '/assets/images/D.jpg',
         },
 
     ]
