@@ -16,7 +16,26 @@ export default function MainComponent() {
     setStaffId(selectedID);
   };
 
-  const [option, setOption] = useState('')
+  const [property, setProperty] = useState('name') //store sortEntry here
+
+  const sortDataEntry = (entry) => {
+    setProperty(entry)
+    STAFFS.sort(function (a, b) {      
+      if( entry == 'id') {return b.id - a.id} 
+      else if( entry == 'name') {
+        console.log(a.name.toLowerCase())
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+        else if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
+        
+      }
+      if( entry == 'doB') {
+        if (a.doB.toLowerCase() > b.doB.toLowerCase()) return 1
+        if (a.doB.toLowerCase() < b.doB.toLowerCase()) return -1
+        
+      }      
+    })
+  }
+  console.log(property, STAFFS)
   return (
     <div>
       <BrowserRouter>
@@ -26,7 +45,7 @@ export default function MainComponent() {
             <Staff
               staffs={STAFFS}
               onClick={(selectedID) => selectedEmployee(selectedID)}
-              onChange = {(selectedOption) => setOption(selectedOption)}
+              getSortEntry = {(entry) => sortDataEntry(entry)}              
             />
           </Route>
           <Route path="/department">
@@ -39,7 +58,7 @@ export default function MainComponent() {
             <Employee staffs={STAFFS} />
           </Route>
           <Route  path="/search">
-          <SearchPage option ={option}/>
+          <SearchPage />
           </Route>
          
         </Switch>

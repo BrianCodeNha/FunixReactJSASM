@@ -33,7 +33,7 @@ export const ROLE = {
 export const STAFFS =
     [
         {
-            id: 0,
+            id: 1,
             name: "Nguyễn Văn A",
             doB: "1999-01-01T08:59:00.000Z",
             salaryScale: 1.1,
@@ -44,7 +44,7 @@ export const STAFFS =
             image: '/assets/images/F.jpg',
         },
         {
-            id: 1,
+            id: 0,
             name: "Nguyễn Văn B",
             doB: "2000-01-01T08:59:00.000Z",
             salaryScale: 1.2,
