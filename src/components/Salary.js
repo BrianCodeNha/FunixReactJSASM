@@ -15,7 +15,7 @@ export default function Salary(props) {
     {props.staffs.map((staff) => {
       const luong = Math.floor(staff.salaryScale*3000000 + staff.overTime*200000/8)
       return (
-       <div className='col-12 col-md-6 col-lg-4'>        
+       <div key={staff.id} className='col-12 col-md-6 col-lg-4'>        
           <div className='card'>
             <h3 className='card-title'>
               {staff.name}

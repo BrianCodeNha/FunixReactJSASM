@@ -4,6 +4,8 @@ import {NavLink, Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 //style
 import './Header.css'
+
+import SearchPage from './SearchPage';
 export default function Header() {
   return (
     <Navbar bg="light" variant="light" expand="lg">
@@ -22,8 +24,8 @@ export default function Header() {
       <Nav className="me-auto">
       <NavLink to='/'><i className='fa fa-users'></i> Nhân viên</NavLink>
       <NavLink to='/department'><i className='fa fa-building'></i> Phòng ban</NavLink>
-      <NavLink to='/salary'><i className="fa fa-money"></i> Bảng lương</NavLink>
-      </Nav>
+      <NavLink to='/salary'><i className="fa fa-money"></i> Bảng lương</NavLink>      
+      </Nav>     
       </Container>
   </Navbar>
   )
