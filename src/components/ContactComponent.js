@@ -197,6 +197,7 @@ validate(firstname, lastname, telnum, email) {
                  <FormFeedback>{errors.email}</FormFeedback>
              </Col>
          </FormGroup>
+         
              </Form>
          </div>
     </div>
