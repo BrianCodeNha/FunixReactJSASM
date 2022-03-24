@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import './SearchBar.css'
+import AddEmployee from './Modal'
 
 export default function SearchBar(props) {
 
     const [term, setTerm] = useState('')
     const [option, setOption] = useState('tên')
     
-    const history = useHistory();
-    
+    const history = useHistory();   
      
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ export default function SearchBar(props) {
                 <option value='doB'>Ngày sinh</option>
             </select>            
             </div>
-            <input onChange={(e) => setTerm(e.target.value)} type='text' id="search" />
+            <input onChange={(e) => setTerm(e.target.value.toLowerCase())} type='text' id="search" />
             <div className='sort'>
             <label>Sort by </label>
             <select onChange={(e) => props.getSortEntry(e.target.value)}>
@@ -35,7 +35,7 @@ export default function SearchBar(props) {
                 <option value='id'>Id desc</option>
                 <option value='doB'>Ngày sinh asc</option>
             </select>
-            
+            {"   "}<AddEmployee />
             </div>
         </form>
         

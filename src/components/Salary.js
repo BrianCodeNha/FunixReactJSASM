@@ -6,10 +6,10 @@ export default function Salary(props) {
   const [property, setProperty] = useState('none');
 
   const handleSort = (value) => props.staffs.sort((a, b) => {
-    setProperty(value)
+    setProperty(value) // sau khi setproperty thì dom sẽ rerender lại ngay và theo đó props.staffs hiển thị vẫn chưa dc sắp xếp, 
     const salaryA = a.salaryScale*3000000 + a.overTime*200000/8;
     const salaryB = b.salaryScale*3000000 + b.overTime*200000/8;
-      if(value === 'salary') return salaryB - salaryA
+      if(value === 'salary') return salaryB - salaryA 
       if(value === 'id') return a.id - b.id
       if(value === 'overTime') return b.overTime - a.overTime
 
