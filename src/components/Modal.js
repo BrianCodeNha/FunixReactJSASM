@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Col } from "react-bootstrap";
+import { Button, Modal, Form, Col, Row } from "react-bootstrap";
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Label, Input } from "reactstrap";
 import { STAFFS } from "../shared/staffs.jsx";
 
@@ -38,7 +39,6 @@ export default function AddEmployee(props) {
       ...newEmployee,
       touched: { ...newEmployee.touched, [field]: true },
     });
-    
   };
 
   const validate = (
@@ -89,9 +89,6 @@ export default function AddEmployee(props) {
     newEmployee.overTime
   );
 
-  
-
-
   // add new Employee function
 
   const handleAdd = () => {
@@ -102,17 +99,13 @@ export default function AddEmployee(props) {
 
     if (newEmployee.doB.length < 1) errors.doB = "yêu cầu nhập";
 
-    if (newEmployee.salaryScale.length < 1)
-      errors.salaryScale = "yêu cầu nhập";
+    if (newEmployee.salaryScale.length < 1) errors.salaryScale = "yêu cầu nhập";
 
-    if (newEmployee.department.length < 1)
-      errors.department = "yêu cầu nhập";
+    if (newEmployee.department.length < 1) errors.department = "yêu cầu nhập";
 
-    if (newEmployee.annualLeave.length < 1)
-      errors.annualLeave = "yêu cầu nhập";
+    if (newEmployee.annualLeave.length < 1) errors.annualLeave = "yêu cầu nhập";
 
-    if (newEmployee.overTime.length < 1)
-      errors.overTime = "yêu cầu nhập";
+    if (newEmployee.overTime.length < 1) errors.overTime = "yêu cầu nhập";
 
     if (
       errors.name === "" &&
@@ -136,6 +129,11 @@ export default function AddEmployee(props) {
       });
     }
   };
+
+  // react-redux-form
+  const required = (val) => val && val.length;
+  const maxLength = (len) => (val) => !val || val.length <= len;
+  const minLength = (len) => (val) => val && val.length >= len;
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -147,34 +145,50 @@ export default function AddEmployee(props) {
           <Modal.Title>Thêm Nhân Viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <div className="row">
+          <LocalForm>
+            <Row className="form-group">
               <Label htmlFor="name" md={4}>
                 Tên
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text
+                  model=".firstname"
+                  className="form-control"
+                  validators={{
+                    required,
+                    minLength: minLength(2),
+                    maxLength: maxLength(30),
+                  }}
                   onChange={(e) =>
                     setNewEmployee({ ...newEmployee, name: e.target.value })
                   }
                   value={newEmployee.name}
-                  invalid={errors.name !== ""}                  
+                  invalid={errors.name !== ""}
                   onBlur={handleBlur("name")}
                   type="text"
                   id="name"
                   name="name"
                   placeholder="Họ và tên"
+                ></Control.text>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",
+                    minLength: "Must be greater than 2 characters",
+                    maxLength: "Must be 30 characters or less",
+                  }}
                 />
-                <div style={{ color: "#dc3545" }}>{errors.name}</div>
               </Col>
-            </div>
-
-            <div className="row">
+            </Row>
+            <Row>
               <Label htmlFor="doB" md={4}>
                 Ngày Sinh
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text
+                  model=".lastname"
                   onChange={(e) =>
                     setNewEmployee({ ...newEmployee, doB: e.target.value })
                   }
@@ -186,15 +200,23 @@ export default function AddEmployee(props) {
                   name="doB"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.doB}</div>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
-            </div>
+            </Row>
             <div className="row">
               <Label htmlFor="startDate" md={4}>
                 Ngày vào công ty
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text
+                model=".lastname"
                   onChange={(e) =>
                     setNewEmployee({
                       ...newEmployee,
@@ -209,15 +231,22 @@ export default function AddEmployee(props) {
                   name="startDate"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.startDate}</div>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
             </div>
-            <div className="row">
+            <Row>
               <Label htmlFor="department" md={4}>
                 Phòng ban
               </Label>
               <Col md={7}>
-                <select
+                <Control.select model=".contactType"
                   value={newEmployee.department}
                   invalid={errors.department !== ""}
                   onBlur={handleBlur("department")}
@@ -234,16 +263,23 @@ export default function AddEmployee(props) {
                   <option>Marketing</option>
                   <option>IT</option>
                   <option>Finance</option>
-                </select>
-                <div style={{ color: "#dc3545" }}>{errors.department}</div>
+                </Control.select>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
-            </div>
+            </Row>
             <div className="row">
               <Label htmlFor="salaryScale" md={4}>
                 Hệ số lương
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text model=".telnum"
                   value={newEmployee.salaryScale}
                   invalid={errors.salaryScale !== ""}
                   onBlur={handleBlur("salaryScale")}
@@ -258,7 +294,14 @@ export default function AddEmployee(props) {
                   name="salaryScale"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.salaryScale}</div>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
             </div>
             <div className="row">
@@ -266,7 +309,7 @@ export default function AddEmployee(props) {
                 Ngày nghỉ còn lại
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text model=".telnum"
                   value={newEmployee.annualLeave}
                   invalid={errors.annualLeave !== ""}
                   onBlur={handleBlur("annualLeave")}
@@ -281,7 +324,14 @@ export default function AddEmployee(props) {
                   name="annualLeave"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.annualLeave}</div>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
             </div>
             <div className="row">
@@ -289,7 +339,7 @@ export default function AddEmployee(props) {
                 Số ngày đã làm thêm
               </Label>
               <Col md={7}>
-                <Input
+                <Control.text model=".telnum"
                   value={newEmployee.overTime}
                   invalid={errors.overTime !== ""}
                   onBlur={handleBlur("overTime")}
@@ -301,10 +351,17 @@ export default function AddEmployee(props) {
                   name="overTime"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.overTime}</div>
+                <Errors
+                  className="text-danger"
+                  model=".firstname"
+                  show="touched"
+                  messages={{
+                    required: "Required",                   
+                  }}
+                />
               </Col>
             </div>
-          </Form>
+          </LocalForm>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
