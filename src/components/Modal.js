@@ -3,11 +3,11 @@ import { Button, Modal, Form, Col } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { STAFFS } from "../shared/staffs.jsx";
 
-export default function AddEmployee() {
+export default function AddEmployee(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => setShow(true); 
   
 
   const [newEmployee, setNewEmployee] = useState({
@@ -22,7 +22,8 @@ export default function AddEmployee() {
   }); 
 
   const handleAdd = () => {
-    STAFFS.concat(newEmployee);    
+    props.getEmployee(newEmployee)
+    handleClose();
     setNewEmployee({
       id: STAFFS.length + 1,
       name: "",
@@ -34,7 +35,7 @@ export default function AddEmployee() {
       image: '/assets/images/D.jpg'
     });
 
-    console.log(STAFFS)
+    console.log(newEmployee,STAFFS)
   };
 
   return (

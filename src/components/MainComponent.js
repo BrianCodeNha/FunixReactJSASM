@@ -8,9 +8,17 @@ import Staff from "./Staff";
 import Department from "./Department";
 import Salary from "./Salary";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
+import { useSelector } from "react-redux";
 
 export default function MainComponent() {
-  const [staffId, setStaffId] = useState(null);
+ 
+  const [staffList, setStaffList] = useState(STAFFS)
+
+  const getEmployee = (newEmployee) => {
+      setStaffList(staffList.concat(newEmployee))
+  }
+
+  const [staffId, setStaffId] = useState(null);  
 
   const selectedEmployee = (selectedID) => {
     setStaffId(selectedID);
@@ -20,7 +28,7 @@ export default function MainComponent() {
 
   const sortDataEntry = (entry) => {
     setProperty(entry)
-    STAFFS.sort(function (a, b) {      
+    staffList.sort(function (a, b) {      
       if( entry == 'id') {return b.id - a.id} 
       else if( entry == 'name') {
         console.log(a.name.toLowerCase())
@@ -35,7 +43,7 @@ export default function MainComponent() {
       }      
     })
   }
-  console.log(property, STAFFS)
+  console.log(property, staffList)
   return (
     <div>
       <BrowserRouter>
@@ -43,19 +51,20 @@ export default function MainComponent() {
         <Switch>
           <Route exact path="/">
             <Staff
-              staffs={STAFFS}
+              staffs={staffList}
               onClick={(selectedID) => selectedEmployee(selectedID)}
-              getSortEntry = {(entry) => sortDataEntry(entry)}              
+              getSortEntry = {(entry) => sortDataEntry(entry)}
+              getEmployee = {(employee) => getEmployee(employee)}              
             />
           </Route>
           <Route path="/department">
             <Department department={DEPARTMENTS} />
           </Route>
           <Route path="/salary">
-            <Salary staffs={STAFFS} />
+            <Salary staffs={staffList} />
           </Route>
           <Route path="/employee/:staffId">
-            <Employee staffs={STAFFS} />
+            <Employee staffs={staffList} />
           </Route>
           <Route  path="/search">
           <SearchPage />
