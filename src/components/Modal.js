@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import { Button, Modal, Form, Col } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { STAFFS } from "../shared/staffs.jsx";
@@ -11,14 +12,16 @@ export default function AddEmployee(props) {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+  let idNumber = 17;
 
   // employee object
   const initialState = {
-    id: STAFFS.length + 1,
+    id: idNumber,
     name: "",
     doB: "",
+    startDate:"",
     salaryScale: "",
-    department: "",
+    department: "Sale",
     annualLeave: "",
     overTime: "",
     image: "/assets/images/D.jpg"}
@@ -26,7 +29,7 @@ export default function AddEmployee(props) {
   const [newEmployee, setNewEmployee] = useState(initialState);
 
   const [isSubmit, SetIsSubmit] = useState(false);
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({name: ''});
 
   //add form data to state
 
@@ -78,9 +81,12 @@ export default function AddEmployee(props) {
     setFormErrors(validate (newEmployee))
     SetIsSubmit(true)
     if(Object.keys(formErrors).length === 0 && isSubmit){
-    props.getEmployee(newEmployee);
+    props.getEmployee(newEmployee);     
     handleClose();
-    setNewEmployee(initialState);
+    idNumber = idNumber + 1;
+    setNewEmployee({...initialState,id: idNumber});
+    console.log(STAFFS)
+    
     }
   };
 
@@ -158,8 +164,7 @@ export default function AddEmployee(props) {
                   id="department"
                   onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
-                >
-                  <option></option>
+                >                  
                   <option>Sale</option>
                   <option>HR</option>
                   <option>Marketing</option>
