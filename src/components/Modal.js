@@ -13,128 +13,40 @@ export default function AddEmployee(props) {
   const handleShow = () => setShow(true);
 
   // employee object
-
-  const [newEmployee, setNewEmployee] = useState({
+  const initialState = {
     id: STAFFS.length + 1,
     name: "",
     doB: "",
     salaryScale: "",
-    department: "Sale",
+    department: "",
     annualLeave: "",
     overTime: "",
-    image: "/assets/images/D.jpg",
-    touched: {
-      name: false,
-      doB: false,
-      salaryScale: false,
-      annualLeave: false,
-      overTime: false,
-    },
-  });
+    image: "/assets/images/D.jpg"}
 
-  // validate form
-  const handleBlur = (field) => (evt) => {
-    setNewEmployee({
-      ...newEmployee,
-      touched: { ...newEmployee.touched, [field]: true },
-    });
+  const [newEmployee, setNewEmployee] = useState(initialState);
+
+  const [isSubmit, SetIsSubmit] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+
+  //handleChange
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setNewEmployee({ ...newEmployee, [name]: value });
     
   };
 
-  const validate = (
-    name,
-    doB,
-    salaryScale,
-    department,
-    annualLeave,
-    overTime
-  ) => {
-    const errors = {
-      name: "",
-      doB: "",
-      salaryScale: "",
-      department: "",
-      annualLeave: "",
-      overTime: "",
-    };
-
-    if (newEmployee.touched.name && name.length < 2)
-      errors.name = "Họ và tên phải nhiều hơn 2 ký tự";
-    else if (newEmployee.touched.name && name.length > 30)
-      errors.name = "Họ và tên phải ít hơn 30 ký tự";
-
-    if (newEmployee.touched.doB && doB.length < 1) errors.doB = "yêu cầu nhập";
-
-    if (newEmployee.touched.salaryScale && salaryScale.length < 1)
-      errors.salaryScale = "yêu cầu nhập";
-
-    if (newEmployee.touched.department && department.length < 1)
-      errors.department = "yêu cầu nhập";
-
-    if (newEmployee.touched.annualLeave && annualLeave.length < 1)
-      errors.annualLeave = "yêu cầu nhập";
-
-    if (newEmployee.touched.overTime && overTime.length < 1)
-      errors.overTime = "yêu cầu nhập";
-
-    return errors;
-  };
-
-  const errors = validate(
-    newEmployee.name,
-    newEmployee.doB,
-    newEmployee.salaryScale,
-    newEmployee.department,
-    newEmployee.annualLeave,
-    newEmployee.overTime
-  );
-
-  
-
+  // validate form
 
   // add new Employee function
 
-  const handleAdd = () => {
-    if (newEmployee.name.length < 2)
-      errors.name = "Họ và tên phải nhiều hơn 2 ký tự";
-    else if (newEmployee.name.length > 30)
-      errors.name = "Họ và tên phải ít hơn 30 ký tự";
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    if (newEmployee.doB.length < 1) errors.doB = "yêu cầu nhập";
-
-    if (newEmployee.salaryScale.length < 1)
-      errors.salaryScale = "yêu cầu nhập";
-
-    if (newEmployee.department.length < 1)
-      errors.department = "yêu cầu nhập";
-
-    if (newEmployee.annualLeave.length < 1)
-      errors.annualLeave = "yêu cầu nhập";
-
-    if (newEmployee.overTime.length < 1)
-      errors.overTime = "yêu cầu nhập";
-
-    if (
-      errors.name === "" &&
-      errors.doB === "" &&
-      errors.salaryScale === "" &&
-      errors.department === "" &&
-      errors.annualLeave === "" &&
-      errors.overTime === ""
-    ) {
-      props.getEmployee(newEmployee);
-      handleClose();
-      setNewEmployee({
-        id: STAFFS.length + 1,
-        name: "",
-        doB: "",
-        salaryScale: 0,
-        department: "Sale",
-        annualLeave: 0,
-        overTime: 0,
-        image: "/assets/images/D.jpg",
-      });
-    }
+    props.getEmployee(newEmployee);
+    handleClose();
+    setNewEmployee(initialState);
   };
   return (
     <>
@@ -145,27 +57,23 @@ export default function AddEmployee(props) {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Thêm Nhân Viên</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
+        </Modal.Header>        
+        <Form onSubmit={handleSubmit}>
+          <Modal.Body>
             <div className="row">
               <Label htmlFor="name" md={4}>
                 Tên
               </Label>
               <Col md={7}>
                 <Input
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, name: e.target.value })
-                  }
+                  onChange={handleChange}
                   value={newEmployee.name}
-                  invalid={errors.name !== ""}                  
-                  onBlur={handleBlur("name")}
                   type="text"
                   id="name"
                   name="name"
                   placeholder="Họ và tên"
                 />
-                <div style={{ color: "#dc3545" }}>{errors.name}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.name}</div>
               </Col>
             </div>
 
@@ -175,18 +83,14 @@ export default function AddEmployee(props) {
               </Label>
               <Col md={7}>
                 <Input
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, doB: e.target.value })
-                  }
+                  onChange={handleChange}
                   value={newEmployee.doB}
-                  invalid={errors.doB !== ""}
-                  onBlur={handleBlur("doB")}
                   type="date"
                   id="doB"
                   name="doB"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.doB}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.doB}</div>
               </Col>
             </div>
             <div className="row">
@@ -195,21 +99,14 @@ export default function AddEmployee(props) {
               </Label>
               <Col md={7}>
                 <Input
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      startDate: e.target.value,
-                    })
-                  }
+                  onChange={handleChange}
                   value={newEmployee.startDate}
-                  onBlur={handleBlur("startDate")}
-                  invalid={errors.startDate !== ""}
                   type="date"
                   id="startDate"
                   name="startDate"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.startDate}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.startDate}</div>
               </Col>
             </div>
             <div className="row">
@@ -219,23 +116,17 @@ export default function AddEmployee(props) {
               <Col md={7}>
                 <select
                   value={newEmployee.department}
-                  invalid={errors.department !== ""}
-                  onBlur={handleBlur("department")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      department: e.target.value,
-                    })
-                  }
+                  onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
                 >
+                  <option></option>
                   <option>Sale</option>
                   <option>HR</option>
                   <option>Marketing</option>
                   <option>IT</option>
                   <option>Finance</option>
                 </select>
-                <div style={{ color: "#dc3545" }}>{errors.department}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.department}</div>
               </Col>
             </div>
             <div className="row">
@@ -245,20 +136,13 @@ export default function AddEmployee(props) {
               <Col md={7}>
                 <Input
                   value={newEmployee.salaryScale}
-                  invalid={errors.salaryScale !== ""}
-                  onBlur={handleBlur("salaryScale")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      salaryScale: e.target.value,
-                    })
-                  }
+                  onChange={handleChange}
                   type="number"
                   id="salaryScale"
                   name="salaryScale"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.salaryScale}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.salaryScale}</div>
               </Col>
             </div>
             <div className="row">
@@ -268,20 +152,13 @@ export default function AddEmployee(props) {
               <Col md={7}>
                 <Input
                   value={newEmployee.annualLeave}
-                  invalid={errors.annualLeave !== ""}
-                  onBlur={handleBlur("annualLeave")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      annualLeave: e.target.value,
-                    })
-                  }
+                  onChange={handleChange}
                   type="number"
                   id="annualLeave"
                   name="annualLeave"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.annualLeave}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.annualLeave}</div>
               </Col>
             </div>
             <div className="row">
@@ -291,29 +168,25 @@ export default function AddEmployee(props) {
               <Col md={7}>
                 <Input
                   value={newEmployee.overTime}
-                  invalid={errors.overTime !== ""}
-                  onBlur={handleBlur("overTime")}
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, overTime: e.target.value })
-                  }
+                  onChange={handleChange}
                   type="number"
                   id="overTime"
                   name="overTime"
                   placeholder=""
                 />
-                <div style={{ color: "#dc3545" }}>{errors.overTime}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.overTime}</div>
               </Col>
             </div>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            Thêm
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Thêm
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
