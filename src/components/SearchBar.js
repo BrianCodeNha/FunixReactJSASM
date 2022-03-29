@@ -35,9 +35,10 @@ export default function SearchBar(props) {
                 <option value='id'>Id desc</option>
                 <option value='doB'>Ngày sinh asc</option>
             </select>
-            {"   "}<AddEmployee getEmployee = {(employee) => props.getEmployee(employee)} />
+            
             </div>
         </form>
+        <div className='col-3'><AddEmployee getEmployee = {(employee) => props.getEmployee(employee)} /></div>
         
     </div>
   )

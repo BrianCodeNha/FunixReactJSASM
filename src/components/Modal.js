@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Col, Row } from "react-bootstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { v4 as uuidv4 } from 'uuid';
+import { Button, Modal, Form, Col } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { STAFFS } from "../shared/staffs.jsx";
 
@@ -12,94 +12,99 @@ export default function AddEmployee(props) {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+  let idNumber = 17;
 
   // employee object
-
-  const [newEmployee, setNewEmployee] = useState({
-    id: STAFFS.length + 1,
+  const initialState = {
+    id: idNumber,
     name: "",
     doB: "",
+    startDate:"",
     salaryScale: "",
-    department: "",
+    department: "Sale",
     annualLeave: "",
     overTime: "",
-    image: "/assets/images/D.jpg"   
-    
-  });
+    image: "/assets/images/D.jpg"}
 
-  const [newEmployeeErrors, setNewEmployeeErrors] = useState({});
+  const [newEmployee, setNewEmployee] = useState(initialState);
 
-  const [isSubmit, setIsSubmit] = useState(false)
+  const [isSubmit, SetIsSubmit] = useState(false);
+  const [formErrors, setFormErrors] = useState({name: ''});
 
-  //handle change
+  //add form data to state
 
   const handleChange = (e) => {
-   
-      const {name, value} = e.target;
-      setNewEmployee({...newEmployee, [name]: value} )
-      console.log(newEmployee)
+    const { name, value } = e.target;
+
+    setNewEmployee({ ...newEmployee, [name]: value });
+    console.log(newEmployee)
+  };
+
+  // validate form
+
+  const validate = (values) => {
+    const errors = {};    
+
+    if(!values.name) {
+      errors.name = 'Yêu cầu nhập'
+    } else if (values.name.length < 3) {
+      errors.name = 'Yêu cầu tối thiểu 2 ký tự'
+    }
+
+    if(!values.doB) {
+      errors.doB = 'Yêu cầu nhập'
+    }
+
+    if(!values.department) {
+      errors.department = 'Yêu cầu nhập'
+    }
+
+    if(!values.salaryScale) {
+      errors.salaryScale = 'Yêu cầu nhập'
+    }
+
+    if(!values.annualLeave) {
+      errors.annualLeave = 'Yêu cầu nhập'
+    }
+
+    if(!values.overTime) {
+      errors.overTime = 'Yêu cầu nhập'
+    }
+
+    return errors;
   }
 
   // submit new Employee function
 
   const handleSubmit = (e) => {
-    console.log()
     e.preventDefault();
-    setNewEmployeeErrors(validate(newEmployee));
-    setIsSubmit(true) 
-  };
-
-  useEffect(() => {
-    console.log(newEmployeeErrors)
-    if (Object.keys(newEmployeeErrors).length === 0 && isSubmit){
-      console.log(newEmployee)
-    }
-  },[newEmployeeErrors])
-
-  const validate = (values) => {
-    const errors = {};
+    setFormErrors(validate (newEmployee))
+    SetIsSubmit(true)
+    if(Object.keys(formErrors).length === 0 && isSubmit){
+    props.getEmployee(newEmployee);     
+    handleClose();
+    idNumber = idNumber + 1;
+    setNewEmployee({...initialState,id: idNumber});
+    console.log(STAFFS)
     
-    if(!values.name){
-      errors.name = "Yêu cầu nhập!"
     }
-
-    if(!values.doB){
-      errors.doB = "Yêu cầu nhập!"
-    }
-
-    if(!values.salaryScale){
-      errors.salaryScale = "Yêu cầu nhập!"
-    }
-
-    if(!values.department){
-      errors.department = "Yêu cầu nhập!"
-    }
-
-    if(!values.annualLeave){
-      errors.annualLeave = "Yêu cầu nhập!"
-    }
-
-    if(!values.overTime){
-      errors.overTime = "Yêu cầu nhập!"
-    }
-
-    return errors;
   };
 
-  
+ 
 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
         <i className="fa fa-plus" />
       </Button>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Thêm Nhân Viên</Modal.Title>
-        </Modal.Header>
+        </Modal.Header>        
         <Form onSubmit={handleSubmit}>
           <Modal.Body>
-            <Row className="form-group">
+            <div className="row">
               <Label htmlFor="name" md={4}>
                 Tên
               </Label>
@@ -112,10 +117,11 @@ export default function AddEmployee(props) {
                   name="name"
                   placeholder="Họ và tên"
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.name}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.name}</div>
               </Col>
-            </Row>
-            <Row>
+            </div>
+
+            <div className="row">
               <Label htmlFor="doB" md={4}>
                 Ngày Sinh
               </Label>
@@ -128,9 +134,9 @@ export default function AddEmployee(props) {
                   name="doB"
                   placeholder=""
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.doB}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.doB}</div>
               </Col>
-            </Row>
+            </div>
             <div className="row">
               <Label htmlFor="startDate" md={4}>
                 Ngày vào công ty
@@ -144,30 +150,30 @@ export default function AddEmployee(props) {
                   name="startDate"
                   placeholder=""
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.startDate}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.startDate}</div>
               </Col>
             </div>
-            <Row>
+            <div className="row">
               <Label htmlFor="department" md={4}>
                 Phòng ban
               </Label>
               <Col md={7}>
                 <select
-                  name="department"
                   value={newEmployee.department}
+                  name='department'
+                  id="department"
                   onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
-                >
-                  <option></option>
+                >                  
                   <option>Sale</option>
                   <option>HR</option>
                   <option>Marketing</option>
                   <option>IT</option>
                   <option>Finance</option>
                 </select>
-                <div style={{color: 'red'}}>{newEmployeeErrors.department}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.department}</div>
               </Col>
-            </Row>
+            </div>
             <div className="row">
               <Label htmlFor="salaryScale" md={4}>
                 Hệ số lương
@@ -176,12 +182,12 @@ export default function AddEmployee(props) {
                 <Input
                   value={newEmployee.salaryScale}
                   onChange={handleChange}
-                  type="text"
+                  type="number"
                   id="salaryScale"
                   name="salaryScale"
                   placeholder=""
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.salaryScale}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.salaryScale}</div>
               </Col>
             </div>
             <div className="row">
@@ -192,12 +198,12 @@ export default function AddEmployee(props) {
                 <Input
                   value={newEmployee.annualLeave}
                   onChange={handleChange}
-                  type="text"
+                  type="number"
                   id="annualLeave"
                   name="annualLeave"
                   placeholder=""
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.annualLeave}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.annualLeave}</div>
               </Col>
             </div>
             <div className="row">
@@ -213,7 +219,7 @@ export default function AddEmployee(props) {
                   name="overTime"
                   placeholder=""
                 />
-                <div style={{color: 'red'}}>{newEmployeeErrors.overTime}</div>
+                <div style={{ color: "#dc3545" }}>{formErrors.overTime}</div>
               </Col>
             </div>
           </Modal.Body>
