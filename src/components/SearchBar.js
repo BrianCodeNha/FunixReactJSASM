@@ -17,8 +17,9 @@ export default function SearchBar(props) {
         
     }
   return (
-    <div>
-        <form onSubmit={handleSubmit}>
+    <div className='row'>
+    <div className='col-8'>
+    <form onSubmit={handleSubmit} >
             <label htmlFor='search'>Tìm kiếm nhân viên</label>
             <div className='select'>
             <select onChange={(e) => setOption(e.target.value)}>
@@ -34,10 +35,14 @@ export default function SearchBar(props) {
                 <option value='name'>Tên asc</option>
                 <option value='id'>Id desc</option>
                 <option value='doB'>Ngày sinh asc</option>
-            </select>
-            {"   "}<AddEmployee getEmployee = {(employee) => props.getEmployee(employee)} />
+            </select>           
             </div>
-        </form>
+        </form> 
+    </div>
+    <div style={{padding: '15px'}} className='col-4'>
+    <AddEmployee getEmployee = {(employee) => props.getEmployee(employee)} className='col' />
+    </div>
+             
         
     </div>
   )

@@ -84,7 +84,7 @@ export default function AddEmployee(props) {
     }
   };
 
-  useEffect (() => {}, [formErrors])
+ 
 
   return (
     <>
