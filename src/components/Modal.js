@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Form, Col, Row } from "react-bootstrap";
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, LocalForm, Errors } from "react-redux-form";
 import { Label, Input } from "reactstrap";
 import { STAFFS } from "../shared/staffs.jsx";
 
@@ -20,166 +20,99 @@ export default function AddEmployee(props) {
     name: "",
     doB: "",
     salaryScale: "",
-    department: "Sale",
+    department: "",
     annualLeave: "",
     overTime: "",
-    image: "/assets/images/D.jpg",
-    touched: {
-      name: false,
-      doB: false,
-      salaryScale: false,
-      annualLeave: false,
-      overTime: false,
-    },
+    image: "/assets/images/D.jpg"   
+    
   });
 
-  // validate form
-  const handleBlur = (field) => (evt) => {
-    setNewEmployee({
-      ...newEmployee,
-      touched: { ...newEmployee.touched, [field]: true },
-    });
+  const [newEmployeeErrors, setNewEmployeeErrors] = useState({});
+
+  const [isSubmit, setIsSubmit] = useState(false)
+
+  //handle change
+
+  const handleChange = (e) => {
+   
+      const {name, value} = e.target;
+      setNewEmployee({...newEmployee, [name]: value} )
+      console.log(newEmployee)
+  }
+
+  // submit new Employee function
+
+  const handleSubmit = (e) => {
+    console.log()
+    e.preventDefault();
+    setNewEmployeeErrors(validate(newEmployee));
+    setIsSubmit(true) 
   };
 
-  const validate = (
-    name,
-    doB,
-    salaryScale,
-    department,
-    annualLeave,
-    overTime
-  ) => {
-    const errors = {
-      name: "",
-      doB: "",
-      salaryScale: "",
-      department: "",
-      annualLeave: "",
-      overTime: "",
-    };
+  useEffect(() => {
+    console.log(newEmployeeErrors)
+    if (Object.keys(newEmployeeErrors).length === 0 && isSubmit){
+      console.log(newEmployee)
+    }
+  },[newEmployeeErrors])
 
-    if (newEmployee.touched.name && name.length < 2)
-      errors.name = "Họ và tên phải nhiều hơn 2 ký tự";
-    else if (newEmployee.touched.name && name.length > 30)
-      errors.name = "Họ và tên phải ít hơn 30 ký tự";
+  const validate = (values) => {
+    const errors = {};
+    
+    if(!values.name){
+      errors.name = "Yêu cầu nhập!"
+    }
 
-    if (newEmployee.touched.doB && doB.length < 1) errors.doB = "yêu cầu nhập";
+    if(!values.doB){
+      errors.doB = "Yêu cầu nhập!"
+    }
 
-    if (newEmployee.touched.salaryScale && salaryScale.length < 1)
-      errors.salaryScale = "yêu cầu nhập";
+    if(!values.salaryScale){
+      errors.salaryScale = "Yêu cầu nhập!"
+    }
 
-    if (newEmployee.touched.department && department.length < 1)
-      errors.department = "yêu cầu nhập";
+    if(!values.department){
+      errors.department = "Yêu cầu nhập!"
+    }
 
-    if (newEmployee.touched.annualLeave && annualLeave.length < 1)
-      errors.annualLeave = "yêu cầu nhập";
+    if(!values.annualLeave){
+      errors.annualLeave = "Yêu cầu nhập!"
+    }
 
-    if (newEmployee.touched.overTime && overTime.length < 1)
-      errors.overTime = "yêu cầu nhập";
+    if(!values.overTime){
+      errors.overTime = "Yêu cầu nhập!"
+    }
 
     return errors;
   };
 
-  const errors = validate(
-    newEmployee.name,
-    newEmployee.doB,
-    newEmployee.salaryScale,
-    newEmployee.department,
-    newEmployee.annualLeave,
-    newEmployee.overTime
-  );
+  
 
-  // add new Employee function
-
-  const handleAdd = () => {
-    if (newEmployee.name.length < 2)
-      errors.name = "Họ và tên phải nhiều hơn 2 ký tự";
-    else if (newEmployee.name.length > 30)
-      errors.name = "Họ và tên phải ít hơn 30 ký tự";
-
-    if (newEmployee.doB.length < 1) errors.doB = "yêu cầu nhập";
-
-    if (newEmployee.salaryScale.length < 1) errors.salaryScale = "yêu cầu nhập";
-
-    if (newEmployee.department.length < 1) errors.department = "yêu cầu nhập";
-
-    if (newEmployee.annualLeave.length < 1) errors.annualLeave = "yêu cầu nhập";
-
-    if (newEmployee.overTime.length < 1) errors.overTime = "yêu cầu nhập";
-
-    if (
-      errors.name === "" &&
-      errors.doB === "" &&
-      errors.salaryScale === "" &&
-      errors.department === "" &&
-      errors.annualLeave === "" &&
-      errors.overTime === ""
-    ) {
-      props.getEmployee(newEmployee);
-      handleClose();
-      setNewEmployee({
-        id: STAFFS.length + 1,
-        name: "",
-        doB: "",
-        salaryScale: 0,
-        department: "Sale",
-        annualLeave: 0,
-        overTime: 0,
-        image: "/assets/images/D.jpg",
-      });
-    }
-  };
-
-  // react-redux-form
-  const required = (val) => val && val.length;
-  const maxLength = (len) => (val) => !val || val.length <= len;
-  const minLength = (len) => (val) => val && val.length >= len;
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
         <i className="fa fa-plus" />
       </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Thêm Nhân Viên</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <LocalForm>
+        <Form onSubmit={handleSubmit}>
+          <Modal.Body>
             <Row className="form-group">
               <Label htmlFor="name" md={4}>
                 Tên
               </Label>
               <Col md={7}>
-                <Control.text
-                  model=".firstname"
-                  className="form-control"
-                  validators={{
-                    required,
-                    minLength: minLength(2),
-                    maxLength: maxLength(30),
-                  }}
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, name: e.target.value })
-                  }
+                <Input
+                  onChange={handleChange}
                   value={newEmployee.name}
-                  invalid={errors.name !== ""}
-                  onBlur={handleBlur("name")}
                   type="text"
                   id="name"
                   name="name"
                   placeholder="Họ và tên"
-                ></Control.text>
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",
-                    minLength: "Must be greater than 2 characters",
-                    maxLength: "Must be 30 characters or less",
-                  }}
                 />
+                <div style={{color: 'red'}}>{newEmployeeErrors.name}</div>
               </Col>
             </Row>
             <Row>
@@ -187,27 +120,15 @@ export default function AddEmployee(props) {
                 Ngày Sinh
               </Label>
               <Col md={7}>
-                <Control.text
-                  model=".lastname"
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, doB: e.target.value })
-                  }
+                <Input
+                  onChange={handleChange}
                   value={newEmployee.doB}
-                  invalid={errors.doB !== ""}
-                  onBlur={handleBlur("doB")}
                   type="date"
                   id="doB"
                   name="doB"
                   placeholder=""
                 />
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                <div style={{color: 'red'}}>{newEmployeeErrors.doB}</div>
               </Col>
             </Row>
             <div className="row">
@@ -215,30 +136,15 @@ export default function AddEmployee(props) {
                 Ngày vào công ty
               </Label>
               <Col md={7}>
-                <Control.text
-                model=".lastname"
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      startDate: e.target.value,
-                    })
-                  }
+                <Input
+                  onChange={handleChange}
                   value={newEmployee.startDate}
-                  onBlur={handleBlur("startDate")}
-                  invalid={errors.startDate !== ""}
                   type="date"
                   id="startDate"
                   name="startDate"
                   placeholder=""
                 />
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                <div style={{color: 'red'}}>{newEmployeeErrors.startDate}</div>
               </Col>
             </div>
             <Row>
@@ -246,32 +152,20 @@ export default function AddEmployee(props) {
                 Phòng ban
               </Label>
               <Col md={7}>
-                <Control.select model=".contactType"
+                <select
+                  name="department"
                   value={newEmployee.department}
-                  invalid={errors.department !== ""}
-                  onBlur={handleBlur("department")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      department: e.target.value,
-                    })
-                  }
+                  onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
                 >
+                  <option></option>
                   <option>Sale</option>
                   <option>HR</option>
                   <option>Marketing</option>
                   <option>IT</option>
                   <option>Finance</option>
-                </Control.select>
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                </select>
+                <div style={{color: 'red'}}>{newEmployeeErrors.department}</div>
               </Col>
             </Row>
             <div className="row">
@@ -279,29 +173,15 @@ export default function AddEmployee(props) {
                 Hệ số lương
               </Label>
               <Col md={7}>
-                <Control.text model=".telnum"
+                <Input
                   value={newEmployee.salaryScale}
-                  invalid={errors.salaryScale !== ""}
-                  onBlur={handleBlur("salaryScale")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      salaryScale: e.target.value,
-                    })
-                  }
-                  type="number"
+                  onChange={handleChange}
+                  type="text"
                   id="salaryScale"
                   name="salaryScale"
                   placeholder=""
                 />
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                <div style={{color: 'red'}}>{newEmployeeErrors.salaryScale}</div>
               </Col>
             </div>
             <div className="row">
@@ -309,29 +189,15 @@ export default function AddEmployee(props) {
                 Ngày nghỉ còn lại
               </Label>
               <Col md={7}>
-                <Control.text model=".telnum"
+                <Input
                   value={newEmployee.annualLeave}
-                  invalid={errors.annualLeave !== ""}
-                  onBlur={handleBlur("annualLeave")}
-                  onChange={(e) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      annualLeave: e.target.value,
-                    })
-                  }
-                  type="number"
+                  onChange={handleChange}
+                  type="text"
                   id="annualLeave"
                   name="annualLeave"
                   placeholder=""
                 />
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                <div style={{color: 'red'}}>{newEmployeeErrors.annualLeave}</div>
               </Col>
             </div>
             <div className="row">
@@ -339,38 +205,27 @@ export default function AddEmployee(props) {
                 Số ngày đã làm thêm
               </Label>
               <Col md={7}>
-                <Control.text model=".telnum"
+                <Input
                   value={newEmployee.overTime}
-                  invalid={errors.overTime !== ""}
-                  onBlur={handleBlur("overTime")}
-                  onChange={(e) =>
-                    setNewEmployee({ ...newEmployee, overTime: e.target.value })
-                  }
+                  onChange={handleChange}
                   type="number"
                   id="overTime"
                   name="overTime"
                   placeholder=""
                 />
-                <Errors
-                  className="text-danger"
-                  model=".firstname"
-                  show="touched"
-                  messages={{
-                    required: "Required",                   
-                  }}
-                />
+                <div style={{color: 'red'}}>{newEmployeeErrors.overTime}</div>
               </Col>
             </div>
-          </LocalForm>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            Thêm
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Thêm
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
