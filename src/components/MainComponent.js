@@ -29,14 +29,14 @@ export default function MainComponent() {
   const sortDataEntry = (entry) => {
     setProperty(entry)
     staffList.sort(function (a, b) {      
-      if( entry == 'id') {return b.id - a.id} 
-      else if( entry == 'name') {
+      if( entry === 'id') {return b.id - a.id} 
+      else if( entry === 'name') {
         console.log(a.name.toLowerCase())
         if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
         else if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
         
       }
-      if( entry == 'doB') {
+      if( entry === 'doB') {
         if (a.doB.toLowerCase() > b.doB.toLowerCase()) return 1
         if (a.doB.toLowerCase() < b.doB.toLowerCase()) return -1
         

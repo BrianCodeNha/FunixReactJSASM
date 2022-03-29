@@ -28,26 +28,64 @@ export default function AddEmployee(props) {
   const [isSubmit, SetIsSubmit] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  //handleChange
+  //add form data to state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setNewEmployee({ ...newEmployee, [name]: value });
-    
+    console.log(newEmployee)
   };
 
   // validate form
 
-  // add new Employee function
+  const validate = (values) => {
+    const errors = {};    
+
+    if(!values.name) {
+      errors.name = 'Yêu cầu nhập'
+    } else if (values.name.length < 3) {
+      errors.name = 'Yêu cầu tối thiểu 2 ký tự'
+    }
+
+    if(!values.doB) {
+      errors.doB = 'Yêu cầu nhập'
+    }
+
+    if(!values.department) {
+      errors.department = 'Yêu cầu nhập'
+    }
+
+    if(!values.salaryScale) {
+      errors.salaryScale = 'Yêu cầu nhập'
+    }
+
+    if(!values.annualLeave) {
+      errors.annualLeave = 'Yêu cầu nhập'
+    }
+
+    if(!values.overTime) {
+      errors.overTime = 'Yêu cầu nhập'
+    }
+
+    return errors;
+  }
+
+  // submit new Employee function
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setFormErrors(validate (newEmployee))
+    SetIsSubmit(true)
+    if(Object.keys(formErrors).length === 0 && isSubmit){
     props.getEmployee(newEmployee);
     handleClose();
     setNewEmployee(initialState);
+    }
   };
+
+  useEffect (() => {}, [formErrors])
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -116,6 +154,8 @@ export default function AddEmployee(props) {
               <Col md={7}>
                 <select
                   value={newEmployee.department}
+                  name='department'
+                  id="department"
                   onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
                 >

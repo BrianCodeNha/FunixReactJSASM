@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { PropTypes } from 'react'
 
 import SearchBar from "./SearchBar";
 //styles
@@ -7,7 +8,7 @@ import "./staff.css";
 
 export default function Staff(props) {
   return (
-    <div className="row cod-flex p-2">
+    <div className="row col-flex p-2">
       <SearchBar 
       getSortEntry={(entry) => props.getSortEntry(entry)} 
       getEmployee = {(employee) => props.getEmployee(employee)}
