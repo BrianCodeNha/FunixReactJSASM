@@ -70,7 +70,10 @@ export default function DishdetailComponent(props) {
               <RenderDish dish={props.dish} />
             </div>
             <div className="container">
-              <RenderCommnent comments={props.comments} />
+              <RenderCommnent comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+              />
             </div>
           </div>
         </div>
