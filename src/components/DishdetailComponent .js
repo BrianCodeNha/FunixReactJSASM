@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
+import CommentForm from "./CommentForm";
 
 function RenderDish(props) {
   return (
@@ -43,9 +44,15 @@ function RenderCommnent(props) {
           </div>
         );
       })}
+      <CommentForm 
+      dishID={props.dishId}
+      addComment={props.addComment}/>
     </div>
   );
 }
+
+
+
 export default function DishdetailComponent(props) {
   const DishDetail = () => {
     if (props.dish != null)

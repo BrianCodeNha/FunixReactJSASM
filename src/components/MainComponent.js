@@ -57,6 +57,7 @@ class Main extends React.Component {
           )
           }
           addComment={this.props.addComment}
+          
         />
       );
     };
