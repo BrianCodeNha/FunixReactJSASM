@@ -12,12 +12,14 @@ import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { Loading} from './LoadingComponent'
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderDish(props) {
   return (
     <div>
       <Card>
-        <CardImg top src={props.dish.image} alt={props.dish.name} />
+import { baseUrl } from "../shared/baseUrl";
+        <CardImg top src={baseUrl + props.dish.image} alt={props.dish.name} />
         <CardBody>
           <CardTitle style={{ textAlign: "left", fontWeight: "bold" }}>
             {props.dish.name}
