@@ -1,5 +1,4 @@
 
-import { COMMENTS } from '../shared/comments';
 import { useState} from 'react';
 import { Button, Modal} from 'react-bootstrap'
 
@@ -30,7 +29,7 @@ export default function CommentForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleClose();
-        props.addComment(props.dishID,state.rating,state.name,state.comment)
+        props.postComment(props.dishID,state.rating,state.name,state.comment)
         
     }
   

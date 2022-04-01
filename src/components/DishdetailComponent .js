@@ -49,7 +49,7 @@ function RenderCommnent(props) {
       })}
       <CommentForm 
       dishID={props.dishId}
-      addComment={props.addComment}/>
+      postComment={props.postComment}/>
     </div>
   );
 }
@@ -96,8 +96,9 @@ export default function DishdetailComponent(props) {
               <RenderDish dish={props.dish} />
             </div>
             <div className="container">
-              <RenderCommnent comments={props.comments}
-              addComment={props.addComment}
+              <RenderCommnent 
+              comments={props.comments}
+              postComment={props.postComment}
               dishId={props.dish.id}
               />
             </div>
