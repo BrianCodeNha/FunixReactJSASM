@@ -19,13 +19,13 @@ function RenderCard({ item, isLoading, errMess }) {
  
   return (
     <Card>
-      <CardImg src={item && item.image ?( baseUrl + item.image) : (baseUrl + "images/alberto.png") } alt="test" />
+      <CardImg src={baseUrl + item.image} alt={item.name} />
       <CardBody>
-        <CardTitle>{item && item.name ? item.name : 'test'}</CardTitle>
-        {item && item.designation ? (
+        <CardTitle>{item.name}</CardTitle>
+        {item.designation ? (
           <CardSubtitle>{item.designation}</CardSubtitle>
         ) : null}
-        <CardText>{item && item.description ? item.description : 'test'}</CardText>
+        <CardText>{item.description}</CardText>
       </CardBody>
     </Card>
   );
@@ -44,8 +44,8 @@ function Home(props) {
           />
         </div>
         <div className="col-12 col-md m-1">
-          <RenderCard item={props.promotions}
-          
+          <RenderCard 
+          item={props.promotions}          
           isLoading={props.promosLoading}
           errMess={props.promosErrMess}
           />
