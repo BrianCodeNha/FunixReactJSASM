@@ -12,7 +12,9 @@ import { actions } from 'react-redux-form'
 
 
 
+
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     dishes: state.dishes,
     comments: state.comments,
@@ -87,6 +89,7 @@ class Main extends React.Component {
     return (
       <div className="App">
         <Header />
+        
         <Switch>
           <Route path="/home" component={HomePage} />
           <Route
@@ -98,7 +101,7 @@ class Main extends React.Component {
           <Route path="/menu/:dishId" component={DishWithId} />
           <Redirect to="/home" />
         </Switch>
-
+       
         <Footer />
       </div>
     );
