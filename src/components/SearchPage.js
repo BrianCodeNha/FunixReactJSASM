@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { STAFFS } from "../shared/staffs";
 import Staff from "./Staff";
 
-export default function SearchPage() {
+export default function SearchPage({staffs}) {
   //url = /search?q=van
   const queryString = useLocation().search; //object contain property search: ?q=van
   const queryParams = new URLSearchParams(queryString); // chuyển thành object urlsearchparams
@@ -19,7 +19,7 @@ export default function SearchPage() {
 
   return (
     <Staff
-      staffs={STAFFS.filter(
+      staffs={staffs.filter(
         (staff) =>
           (option === "tên"
             ? staff.name + ""
