@@ -3,17 +3,17 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Employee from "./Employee";
 import SearchPage from "./SearchPage";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import Staff from "./Staff";
 import Department from "./Department";
 import Salary from "./Salary";
-import { connect, useSelector } from "react-redux";
+import { connect} from "react-redux";
 import {
   fetchDepartments,
   fetchStaffs,
   fetchSalary,
 } from "../Redux/ActionCreator";
-
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 // get state, and dispatch from store
 
@@ -37,6 +37,8 @@ const mapDispatchToProp = (dispatch) => ({
   },
 });
 
+
+
 export function MainComponent({
   staffFromServer,
   isLoading,
@@ -46,6 +48,7 @@ export function MainComponent({
   fetchStaffs,
   fetchSalary,
   fetchDepartments, 
+  
 }) {
   //store stafflist here
   const [staffList, setStaffList] = useState([]);
@@ -54,10 +57,10 @@ export function MainComponent({
     // insert mapDispatchToProp
     fetchStaffs();
     fetchDepartments();
-    fetchSalary();
+    fetchSalary();    
   }, []); // component Did mount
 
-  console.log("afterfetch", staffFromServer);
+ 
 
   const getEmployee = (newEmployee) => {
     setStaffList(staffFromServer.concat(newEmployee));
@@ -112,11 +115,15 @@ export function MainComponent({
       errMess={errMess}
     />
   );
-  return (
+        
+
+  return (    
     <div>
       <BrowserRouter>
         <Header />
-        <Switch>
+        <TransitionGroup>
+            <CSSTransition  classNames="page" timeout={3000}>
+        <Switch >        
           <Route exact path="/">
             <Staff
               staffs={staffFromServer}
@@ -138,7 +145,10 @@ export function MainComponent({
           <Route path="/search">
             <SearchPage staffs={staffSalaryFromServer} />
           </Route>
+          
         </Switch>
+        </CSSTransition>
+          </TransitionGroup>
         <Footer />
       </BrowserRouter>
     </div>

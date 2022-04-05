@@ -1,7 +1,5 @@
 import * as ActionTypes from "./ActionTypes"
 import { baseUrl } from "../shared/baseUrl"
-import Department from "../components/Department"
-import { actions } from "react-redux-form"
 
 export const addNewEmployee = (newEmployee) => ({
     type: ActionTypes.ADD_NEW_EMPLOYEE,
@@ -14,17 +12,20 @@ export const fetchStaffs = () => (dispatch) => {
     
     dispatch(staffLoading(true));
     
-  fetch( baseUrl + 'staffs')    
-    .then(response => {
-        console.log('response', response)
-        if (response.ok) {
-        return response;
-        } else {
-        var error = new Error('Error ' + response.status + ': ' + response.statusText);
-        response = error.response
-        throw error;
-        }
-    })
+  return fetch( baseUrl + 'staffs')    
+  .then(response => {
+    if (response.ok) {
+      return response;
+    } else {
+      var error = new Error('Error ' + response.status + ': ' + response.statusText);
+      error.response = response;
+      throw error;
+    }
+  },
+  error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+  })
     .then(response => response.json())
     .then(staff => dispatch(addStaff(staff)))
     .catch(error => dispatch(staffLoadingFailed(error.message)) )       
