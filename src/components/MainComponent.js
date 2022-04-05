@@ -3,17 +3,18 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Employee from "./Employee";
 import SearchPage from "./SearchPage";
-import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Staff from "./Staff";
 import Department from "./Department";
 import Salary from "./Salary";
-import { connect} from "react-redux";
+import { connect } from "react-redux";
 import {
   fetchDepartments,
   fetchStaffs,
   fetchSalary,
+  postStaff,
 } from "../Redux/ActionCreator";
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 
 // get state, and dispatch from store
 
@@ -35,20 +36,39 @@ const mapDispatchToProp = (dispatch) => ({
   fetchSalary: () => {
     dispatch(fetchSalary());
   },
+  postStaff: (
+    id,
+    EmployeeName,
+    doB,
+    startDate,
+    departmentId,
+    salaryScale,
+    annualLeave,
+    overTime,
+    image) => {
+    dispatch(postStaff(
+      id,
+      EmployeeName,
+      doB,
+      startDate,
+      departmentId,
+      salaryScale,
+      annualLeave,
+      overTime,
+      Image));
+  },
 });
-
-
 
 export function MainComponent({
   staffFromServer,
   isLoading,
-  errMess,  
-  departmentFromServer,   
+  errMess,
+  departmentFromServer,
   staffSalaryFromServer,
   fetchStaffs,
   fetchSalary,
-  fetchDepartments, 
-  
+  fetchDepartments,
+  postStaff,
 }) {
   //store stafflist here
   const [staffList, setStaffList] = useState([]);
@@ -57,10 +77,8 @@ export function MainComponent({
     // insert mapDispatchToProp
     fetchStaffs();
     fetchDepartments();
-    fetchSalary();    
+    fetchSalary();
   }, []); // component Did mount
-
- 
 
   const getEmployee = (newEmployee) => {
     setStaffList(staffFromServer.concat(newEmployee));
@@ -97,7 +115,11 @@ export function MainComponent({
 
   const staffWithId = ({ match }) => (
     <Employee
-      staff={staffFromServer.filter((staff) => staff.id === parseInt(match.params.staffId, 10))[0]}
+      staff={
+        staffFromServer.filter(
+          (staff) => staff.id === parseInt(match.params.staffId, 10)
+        )[0]
+      }
       isLoading={isLoading}
       errMess={errMess}
     />
@@ -115,15 +137,13 @@ export function MainComponent({
       errMess={errMess}
     />
   );
-        
 
-  return (    
+  return (
     <div>
       <BrowserRouter>
         <Header />
-        <TransitionGroup>
-            <CSSTransition  classNames="page" timeout={3000}>
-        <Switch >        
+
+        <Switch>
           <Route exact path="/">
             <Staff
               staffs={staffFromServer}
@@ -145,10 +165,8 @@ export function MainComponent({
           <Route path="/search">
             <SearchPage staffs={staffSalaryFromServer} />
           </Route>
-          
         </Switch>
-        </CSSTransition>
-          </TransitionGroup>
+
         <Footer />
       </BrowserRouter>
     </div>

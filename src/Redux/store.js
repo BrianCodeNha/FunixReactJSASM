@@ -14,6 +14,8 @@ const reducer = (
   action
 ) => {
   switch (action.type) {
+    case ActionTypes.ADD_NEW_EMPLOYEE:
+        return {...state, staffList: action.payload}
     case ActionTypes.LOAD_STAFFS:
         return {...state, staffList: action.payload, isLoading: false, errMess: null}
     case ActionTypes.STAFFS_LOADING:

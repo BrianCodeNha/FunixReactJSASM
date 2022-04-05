@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import "./staff.css";
 import { useState } from "react";
 // transition animation
-import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { FadeTransform} from 'react-animation-components';
 
 
 
@@ -27,8 +27,16 @@ export default function Staff(props) {
                 }}>
       <Link exact to={`/employee/${staff.id}`}>
         <div className="item">
-          <img src={staff.image} alt={staff.name} />
+        <div className="row">
+        <img src={staff.image} alt={staff.name} />
           {staff.name}
+        </div>
+        <div className="row">
+        <button className="col info">Delete</button>
+        <button className="col info">Edit</button>
+        </div>
+          
+          
         </div>
       </Link>
       </FadeTransform>
