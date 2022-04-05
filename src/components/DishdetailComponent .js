@@ -13,10 +13,17 @@ import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { Loading} from './LoadingComponent'
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
 
 function RenderDish(props) {
   return (
     <div>
+    <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
       <Card>
 import { baseUrl } from "../shared/baseUrl";
         <CardImg top src={baseUrl + props.dish.image} alt={props.dish.name} />
@@ -29,6 +36,7 @@ import { baseUrl } from "../shared/baseUrl";
           </CardText>
         </CardBody>
       </Card>
+      </FadeTransform>
     </div>
   );
 }
@@ -37,6 +45,7 @@ function RenderCommnent(props) {
   return (
     <div>
       <h4>Comments</h4>
+      <Stagger in>
       {props.comments.map((comment, index) => {
         return (
           <div key={index}>
@@ -47,6 +56,7 @@ function RenderCommnent(props) {
           </div>
         );
       })}
+      </Stagger>
       <CommentForm 
       dishID={props.dishId}
       postComment={props.postComment}/>

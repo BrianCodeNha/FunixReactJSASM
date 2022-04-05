@@ -5,7 +5,7 @@ import Menu from "./MenuComponent";
 import Header from "./HeaderComponent";
 import Footer from "./Footer";
 import DishdetailComponent from "./DishdetailComponent ";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { postComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreator";
 import { actions } from 'react-redux-form'
@@ -39,6 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchPromos());
   },
 });
+
+
 
 class Main extends React.Component {
 
@@ -85,7 +87,10 @@ class Main extends React.Component {
         />
       );
     };
-console.log(this.props.location.key)
+
+   
+
+    console.log('location',this.props.location)
     return (
       <div className="App">
         <Header />
