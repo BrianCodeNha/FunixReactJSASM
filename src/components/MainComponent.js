@@ -9,7 +9,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { postComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreator";
 import { actions } from 'react-redux-form'
-
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 
@@ -85,23 +85,25 @@ class Main extends React.Component {
         />
       );
     };
-
+console.log(this.props.location.key)
     return (
       <div className="App">
         <Header />
-        
-        <Switch>
+        <TransitionGroup>
+            <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+              <Switch location={this.props.location}>
           <Route path="/home" component={HomePage} />
           <Route
             exact
             path="/menu"
-            component={() => <Menu dishes={this.props.dishes} />}
-          />
+            
+          ><Menu dishes={this.props.dishes} /></Route>
           <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
           <Route path="/menu/:dishId" component={DishWithId} />
           <Redirect to="/home" />
-        </Switch>
-       
+          </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
