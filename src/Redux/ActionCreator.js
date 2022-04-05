@@ -64,7 +64,12 @@ export const postStaff =
         alert("Error: " + err.message);
       });
   };
-// fetch staff from server
+
+// DELETE employee
+
+// EDIT EMPLOYEE
+
+  // fetch staff from server
 
 export const fetchStaffs = () => (dispatch) => {
   dispatch(staffLoading(true));

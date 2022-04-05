@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdb-react-ui-kit";
 import {Link} from 'react-router-dom'
-
+import { FadeTransform} from 'react-animation-components';
 export default function Salary(props) {
   const [property, setProperty] = useState('none');
 
@@ -38,7 +38,12 @@ export default function Salary(props) {
       
       const luong = Math.floor(staff.salaryScale*3000000 + staff.overTime*200000/8)
       return (
-       <div key={staff.id} className='col-12 col-md-6 col-lg-4'>        
+       <div key={staff.id} className='col-12 col-md-6 col-lg-4'>
+       <FadeTransform
+       in
+       transformProps={{
+           exitTransform: 'scale(0.5) translateY(-50%)'
+       }}>        
           <div className='card'>
             <h3 className='card-title'>
               {staff.name}
@@ -51,7 +56,8 @@ export default function Salary(props) {
             <div className='card-header' style={{backgroundColor: "#f5f5f5"}}>
               Lương: {luong.toLocaleString(undefined, {maximumFractionDigits:2})} vnd
             </div>
-          </div>        
+          </div> 
+          </FadeTransform>     
        </div>
     )})}
     </div>
