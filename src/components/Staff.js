@@ -7,12 +7,11 @@ import SearchBar from "./SearchBar";
 import "./staff.css";
 
 export default function Staff(props) {
-
- 
   if (props.isLoading) {
     return <Loading />;
-  } else if (props.errorMess) {
-    <h4>{props.errorMess}</h4>;
+  } else if (props.errMess) {
+    <h4>{props.errMess}</h4>;
+    console.log(props.errMess)
   } else {
     return (
       <div className="row cod-flex p-2">
@@ -26,7 +25,7 @@ export default function Staff(props) {
             key={staff.id}
             className="outer col-12 col-md-4 col-lg-2 justify-content-center"
           >
-            <Link exact to={`employee/${staff.id}`}>
+            <Link exact to={`/employee/${staff.id}`}>
               <div className="item">
                 <img src={staff.image} alt={staff.name} />
                 {staff.name}

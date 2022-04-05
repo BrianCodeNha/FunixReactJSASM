@@ -13,8 +13,18 @@ export const addNewEmployee = (newEmployee) => ({
 export const fetchStaffs = () => (dispatch) => { 
     
     dispatch(staffLoading(true));
-
- return   fetch( baseUrl + 'staffs')    
+    
+  fetch( baseUrl + 'staffs')    
+    .then(response => {
+        console.log('response', response)
+        if (response.ok) {
+        return response;
+        } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        response = error.response
+        throw error;
+        }
+    })
     .then(response => response.json())
     .then(staff => dispatch(addStaff(staff)))
     .catch(error => dispatch(staffLoadingFailed(error.message)) )       
@@ -27,7 +37,6 @@ export const addStaff = (staff) => ({
 
 export const staffLoading = () => ({
     type: ActionTypes.STAFFS_LOADING,
-
 })
 
 export const staffLoadingFailed = (errMess) => ({

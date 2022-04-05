@@ -8,50 +8,64 @@ import Staff from "./Staff";
 import Department from "./Department";
 import Salary from "./Salary";
 import { connect, useSelector } from "react-redux";
-import { fetchDepartments, fetchStaffs, fetchSalary } from "../Redux/ActionCreator";
-import DepartmentEmployee from "./DepartmentEmployee";
+import {
+  fetchDepartments,
+  fetchStaffs,
+  fetchSalary,
+} from "../Redux/ActionCreator";
+
 
 // get state, and dispatch from store
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   staffFromServer: state.staffList,
   isLoading: state.isLoading,
   errMess: state.errMess,
   departmentFromServer: state.departments,
-  staffSalaryFromServer: state.staffSalary
-})
+  staffSalaryFromServer: state.staffSalary,
+});
 
 const mapDispatchToProp = (dispatch) => ({
-  fetchStaffs: () => {dispatch(fetchStaffs())},
-  fetchDepartments: () => {dispatch(fetchDepartments())},
-  fetchSalary: () => {dispatch(fetchSalary())}
-})
+  fetchStaffs: () => {
+    dispatch(fetchStaffs());
+  },
+  fetchDepartments: () => {
+    dispatch(fetchDepartments());
+  },
+  fetchSalary: () => {
+    dispatch(fetchSalary());
+  },
+});
 
-  export function MainComponent({staffFromServer, isLoading, errMess, fetchStaffs, departmentFromServer, fetchDepartments, fetchSalary, staffSalaryFromServer}) {
-
-  //store stafflist here  
-  const [staffList, setStaffList] = useState([])
-
+export function MainComponent({
+  staffFromServer,
+  isLoading,
+  errMess,  
+  departmentFromServer,   
+  staffSalaryFromServer,
+  fetchStaffs,
+  fetchSalary,
+  fetchDepartments, 
+}) {
+  //store stafflist here
+  const [staffList, setStaffList] = useState([]);
 
   useEffect(() => {
     // insert mapDispatchToProp
     fetchStaffs();
-    fetchDepartments();   
+    fetchDepartments();
     fetchSalary();
+  }, []); // component Did mount
 
-  },[]) // component Did mount
-
-  
-
-  console.log('afterfetch',staffFromServer);
+  console.log("afterfetch", staffFromServer);
 
   const getEmployee = (newEmployee) => {
-      setStaffList(staffFromServer.concat(newEmployee))
-  }
+    setStaffList(staffFromServer.concat(newEmployee));
+  };
 
   //staffId for idividiual view
 
-  const [staffId, setStaffId] = useState(null);  
+  const [staffId, setStaffId] = useState(null);
 
   const selectedEmployee = (selectedID) => {
     setStaffId(selectedID);
@@ -59,41 +73,45 @@ const mapDispatchToProp = (dispatch) => ({
 
   // this is for sort entry
 
-  const [property, setProperty] = useState('name') //store sortEntry here
+  const [property, setProperty] = useState("name"); //store sortEntry here
 
   const sortDataEntry = (entry) => {
-    setProperty(entry)
-    staffFromServer.sort(function (a, b) {      
-      if( entry === 'id') {return b.id - a.id} 
-      else if( entry === 'name') {
-        console.log(a.name.toLowerCase())
-        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-        else if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-        
+    setProperty(entry);
+    staffFromServer.sort(function (a, b) {
+      if (entry === "id") {
+        return b.id - a.id;
+      } else if (entry === "name") {
+        console.log(a.name.toLowerCase());
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+        else if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
       }
-      if( entry === 'doB') {
-        if (a.doB.toLowerCase() > b.doB.toLowerCase()) return 1
-        if (a.doB.toLowerCase() < b.doB.toLowerCase()) return -1
-        
-      }      
-    })
-  }
+      if (entry === "doB") {
+        if (a.doB.toLowerCase() > b.doB.toLowerCase()) return 1;
+        if (a.doB.toLowerCase() < b.doB.toLowerCase()) return -1;
+      }
+    });
+  };
 
-  const staffWithId = ({match}) => (
-    <Employee 
-    staff = {staffFromServer.filter((staff) => staff.id === parseInt(match.params.staffId,10))[0]}    
-    />)
-
-  const departmentWithId = ({match}) => (
-    <Staff
-    staffs = {staffFromServer.filter((staff) => staff.departmentId === 'Dept01')}
-    onClick={(selectedID) => selectedEmployee(selectedID)}
-    getSortEntry = {(entry) => sortDataEntry(entry)}
-    getEmployee = {(employee) => getEmployee(employee)}
-    isLoading = {isLoading}
-    errorMess = {errMess}      
+  const staffWithId = ({ match }) => (
+    <Employee
+      staff={staffFromServer.filter((staff) => staff.id === parseInt(match.params.staffId, 10))[0]}
+      isLoading={isLoading}
+      errMess={errMess}
     />
-  )
+  );
+
+  const departmentWithId = ({ match }) => (
+    <Staff
+      staffs={staffFromServer.filter(
+        (staff) => staff.departmentId === match.params.departId
+      )}
+      onClick={(selectedID) => selectedEmployee(selectedID)}
+      getSortEntry={(entry) => sortDataEntry(entry)}
+      getEmployee={(employee) => getEmployee(employee)}
+      isLoading={isLoading}
+      errMess={errMess}
+    />
+  );
   return (
     <div>
       <BrowserRouter>
@@ -103,29 +121,23 @@ const mapDispatchToProp = (dispatch) => ({
             <Staff
               staffs={staffFromServer}
               onClick={(selectedID) => selectedEmployee(selectedID)}
-              getSortEntry = {(entry) => sortDataEntry(entry)}
-              getEmployee = {(employee) => getEmployee(employee)}
-              isLoading = {isLoading}
-              errorMess = {errMess}              
+              getSortEntry={(entry) => sortDataEntry(entry)}
+              getEmployee={(employee) => getEmployee(employee)}
+              isLoading={isLoading}
+              errorMess={errMess}
             />
           </Route>
           <Route exact path="/department">
-            <Department 
-            department={departmentFromServer} />
+            <Department department={departmentFromServer} />
           </Route>
-          <Route path="/department/:departId">
-            {departmentWithId}
-          </Route>
+          <Route path="/department/:departId">{departmentWithId}</Route>
           <Route path="/salary">
             <Salary staffs={staffSalaryFromServer} />
           </Route>
-          <Route path="/employee/:staffId">
-            {staffWithId}
+          <Route path="/employee/:staffId">{staffWithId}</Route>
+          <Route path="/search">
+            <SearchPage staffs={staffSalaryFromServer} />
           </Route>
-          <Route  path="/search">
-          <SearchPage staffs={staffSalaryFromServer}/>
-          </Route>
-         
         </Switch>
         <Footer />
       </BrowserRouter>
