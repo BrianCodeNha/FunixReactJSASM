@@ -151,7 +151,7 @@ export function MainComponent({
               staffs={staffFromServer}
               onClick={(selectedID) => selectedEmployee(selectedID)}
               getSortEntry={(entry) => sortDataEntry(entry)}
-              deleteEmployee={(id) => deleteEmployee(id)}
+              deleteEmployee={deleteEmployee}
               isLoading={isLoading}
               errorMess={errMess}
             />

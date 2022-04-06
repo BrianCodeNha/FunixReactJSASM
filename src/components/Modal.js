@@ -20,7 +20,7 @@ export default function AddEmployee(props) {
     doB: "",
     startDate: "",
     salaryScale: "",
-    department: "Sale",
+    department: "Dept01",
     annualLeave: "",
     overTime: "",
     image: "/assets/images/alberto.png",
@@ -166,11 +166,11 @@ export default function AddEmployee(props) {
                   onChange={handleChange}
                   style={{ width: "100%", borderRadius: "3px" }}
                 >
-                  <option>Sale</option>
-                  <option>HR</option>
-                  <option>Marketing</option>
-                  <option>IT</option>
-                  <option>Finance</option>
+                  <option value='Dept01'>Sale</option>
+                  <option value='Dept02'>HR</option>
+                  <option value='Dept03'>Marketing</option>
+                  <option value='Dept04'>IT</option>
+                  <option value='Dept05'>Finance</option>
                 </select>
                 <div style={{ color: "#dc3545" }}>{formErrors.department}</div>
               </Col>

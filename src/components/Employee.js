@@ -87,8 +87,8 @@ export function Employee(props) { //truyền data fetch từ server truyền và
            <label htmlFor="startDate" className="row container">Ngày vào công ty: 
            <input type='date' name='startDate' placeholder={props.staff.startDate} onChange={(e) => handleChange(e)} />
            </label>
-           <label htmlFor="department" className="row container">Phòng ban: 
-           <input type='date' name='department' placeholder={props.staff.department} onChange={(e) => handleChange(e)} />
+           <label htmlFor="departmentId" className="row container">Phòng ban: 
+           <input type='text' name='departmentId' placeholder={props.staff.departmentId} onChange={(e) => handleChange(e)} />
            </label>
            <label htmlFor="annualLeave" className="row container">Số ngày nghỉ còn lại: 
            <input type='number' name='annualLeave' placeholder={props.staff.annualLeave} onChange={(e) => handleChange(e)} />
