@@ -74,7 +74,7 @@ export function SearchBar(props) {
         <AddEmployee 
         postStaff = {props.postStaff}
         staffList = {props.staffList}
-        getEmployee={(employee) => props.getEmployee(employee)} />
+         />
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ export const postStaff =
       .then((data) => {dispatch(addStaff(data))})
       .catch((err) => {
         console.log("post comments", err.message);
-        alert("Error: " + err.message);
+        alert("postComments Error: " + err.message);
       });
   };
 
@@ -72,11 +72,65 @@ export const deleteEmployee = (id) => (dispatch) => {
   return fetch(baseUrl + `staffs/${id}`,{
     method: 'DELETE'
   })
+  .then(
+    (response) => {
+      console.log(response);
+      if (response.ok) {
+        return response;
+      } else {
+        var err = new Error(
+          "Error " + response.status + ": " + response.statusText
+        );
+        err.response = response;
+        throw err;
+      }
+    },
+    (err) => {
+      throw err;
+    }
+  )
   .then(response => response.json())
-  .then(response => {console.log(response); dispatch(addStaff(response))})
-}
+  .then(response => {alert(`successfully delete employeeId: ${id}`); dispatch(addStaff(response))})
+  .catch((err) => {
+    console.log("delete", err.message);
+    alert("delete error: " + err.message);
+  });
+};
+
 
 // EDIT EMPLOYEE
+
+export const updateEmployee = (id, employee) => (dispatch) => {
+  fetch(baseUrl + `staffs`,{
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(employee)
+  })
+  .then(
+    (response) => {
+      console.log(response);
+      if (response.ok) {
+        return response;
+      } else {
+        var err = new Error(
+          "Error " + response.status + ": " + response.statusText
+        );
+        err.response = response;
+        throw err;
+      }
+    },
+    (err) => {
+      throw err;
+    }
+  )
+  .then(response => response.json())
+  .then(data => dispatch(addStaff(data)))
+  .catch((err) => {
+    console.log("updatedEmployee", err.message);
+    alert("updatedEmployee error: " + err.message);
+  });
+};
+
 
   // fetch staff from server
 

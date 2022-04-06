@@ -81,7 +81,7 @@ export default function AddEmployee(props) {
     setFormErrors(validate(newEmployee));
     SetIsSubmit(true);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      props.getEmployee(newEmployee);
+      
       handleClose();      
       console.log('id',props.staffList.length)
       setNewEmployee({ ...initialState, id: props.staffList.length });
