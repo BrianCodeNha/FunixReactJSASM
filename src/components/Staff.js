@@ -13,33 +13,34 @@ import { FadeTransform} from 'react-animation-components';
 
 export default function Staff(props) {
 
-  const staffDetail = props.staffs.map((staff) => (
-    
+  const staffDetail = props.staffs.map((staff) => (   
     <div
       onClick={() => props.onClick(staff.id)}
       key={staff.id}
       className="outer col-12 col-md-4 col-lg-2 justify-content-center"
-    >
-    <FadeTransform
+    > 
+      
+        <div className="item">
+        <FadeTransform
                 in
                 transformProps={{
                     exitTransform: 'scale(0.5) translateY(-50%)'
                 }}>
-      <Link exact to={`/employee/${staff.id}`}>
-        <div className="item">
+        <Link exact to={`/employee/${staff.id}`}>
         <div className="row">
         <img src={staff.image} alt={staff.name} />
           {staff.name}
         </div>
+        </Link>
+        </FadeTransform>
         <div className="row">
-        <button className="col info">Delete</button>
+        <button onClick={() => props.deleteEmployee(staff.id)} className="col info">Delete</button>
         <button className="col info">Edit</button>
-        </div>
+        </div>        
           
-          
         </div>
-      </Link>
-      </FadeTransform>
+     
+      
     </div>
     
   ))

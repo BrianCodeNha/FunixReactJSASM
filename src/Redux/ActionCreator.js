@@ -67,6 +67,15 @@ export const postStaff =
 
 // DELETE employee
 
+export const deleteEmployee = (id) => (dispatch) => {
+  
+  return fetch(baseUrl + `staffs/${id}`,{
+    method: 'DELETE'
+  })
+  .then(response => response.json())
+  .then(response => {console.log(response); dispatch(addStaff(response))})
+}
+
 // EDIT EMPLOYEE
 
   // fetch staff from server

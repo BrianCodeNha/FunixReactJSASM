@@ -13,6 +13,7 @@ import {
   fetchStaffs,
   fetchSalary,
   postStaff,
+  deleteEmployee
 } from "../Redux/ActionCreator";
 
 
@@ -55,8 +56,9 @@ const mapDispatchToProp = (dispatch) => ({
       salaryScale,
       annualLeave,
       overTime,
-      Image));
+      image));
   },
+  deleteEmployee: (id) => {dispatch(deleteEmployee(id))}
 });
 
 export function MainComponent({
@@ -69,6 +71,7 @@ export function MainComponent({
   fetchSalary,
   fetchDepartments,
   postStaff,
+  deleteEmployee
 }) {
   //store stafflist here
   const [staffList, setStaffList] = useState([]);
@@ -80,9 +83,7 @@ export function MainComponent({
     fetchSalary();
   }, []); // component Did mount
 
-  const getEmployee = (newEmployee) => {
-    setStaffList(staffFromServer.concat(newEmployee));
-  };
+
 
   //staffId for idividiual view
 
@@ -132,9 +133,10 @@ export function MainComponent({
       )}
       onClick={(selectedID) => selectedEmployee(selectedID)}
       getSortEntry={(entry) => sortDataEntry(entry)}
-      getEmployee={(employee) => getEmployee(employee)}
+      
       isLoading={isLoading}
       errMess={errMess}
+      
     />
   );
 
@@ -149,7 +151,7 @@ export function MainComponent({
               staffs={staffFromServer}
               onClick={(selectedID) => selectedEmployee(selectedID)}
               getSortEntry={(entry) => sortDataEntry(entry)}
-              getEmployee={(employee) => getEmployee(employee)}
+              deleteEmployee={(id) => deleteEmployee(id)}
               isLoading={isLoading}
               errorMess={errMess}
             />
